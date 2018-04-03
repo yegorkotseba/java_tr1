@@ -2,6 +2,8 @@ package com.java_tr1.addressbook;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 import static org.testng.Assert.*;
 import org.openqa.selenium.*;
@@ -10,14 +12,17 @@ import org.openqa.selenium.support.ui.Select;
 
 public class GroupCreationTests {
 
+
         private WebDriver driver;
         private String baseUrl;
         private boolean acceptNextAlert = true;
         private StringBuffer verificationErrors = new StringBuffer();
 
         @BeforeClass(alwaysRun = true)
+
         public void setUp() throws Exception {
-            driver = new FirefoxDriver();
+            System.setProperty("webdriver.chrome.driver", "C:\\Tools\\chromedriver.exe");
+            driver = new ChromeDriver();
             baseUrl = "http://localhost/addressbook/";
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         }
