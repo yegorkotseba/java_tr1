@@ -1,8 +1,12 @@
 package com.java_tr1.addressbook.appmanager;
 
 import com.java_tr1.addressbook.model.GroupData;
+import com.sun.org.apache.xerces.internal.xs.StringList;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupHelper extends HelperBase{
 
@@ -53,5 +57,9 @@ public class GroupHelper extends HelperBase{
 
     public boolean isThereAGroup() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public int getGroupCount() {
+        return driver.findElements(By.name("selected[]")).size();
     }
 }
