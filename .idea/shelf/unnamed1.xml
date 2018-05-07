@@ -1,0 +1,44 @@
+<changelist name="unnamed1" date="1525441310362" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed1/shelved.patch" />
+  <option name="DESCRIPTION" value="" />
+  <binary>
+    <option name="BEFORE_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/appmanager/ApplicationManager.class" />
+    <option name="AFTER_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/appmanager/ApplicationManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed1/ApplicationManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/appmanager/GroupHelper.class" />
+    <option name="AFTER_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/appmanager/GroupHelper.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed1/GroupHelper.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/appmanager/NavigationHelper.class" />
+    <option name="AFTER_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/appmanager/NavigationHelper.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed1/NavigationHelper.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/ContactCreationTests.class" />
+    <option name="AFTER_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/ContactCreationTests.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed1/ContactCreationTests.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/ContactModificationTests.class" />
+    <option name="AFTER_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/ContactModificationTests.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed1/ContactModificationTests.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/GroupCreationTests.class" />
+    <option name="AFTER_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/GroupCreationTests.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed1/GroupCreationTests.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/GroupDeletionTests.class" />
+    <option name="AFTER_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/GroupDeletionTests.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed1/GroupDeletionTests.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/GroupModification.class" />
+    <option name="AFTER_PATH" value="addressbook-web-tests/out/test/classes/com/java_tr1/addressbook/tests/GroupModification.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed1/GroupModification.class" />
+  </binary>
+</changelist>

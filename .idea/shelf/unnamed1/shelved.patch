@@ -1,0 +1,158 @@
+Index: addressbook-web-tests/src/test/java/com/java_tr1/addressbook/appmanager/GroupHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.java_tr1.addressbook.appmanager;\n\nimport com.java_tr1.addressbook.model.GroupData;\nimport com.sun.org.apache.xerces.internal.xs.StringList;\nimport org.openqa.selenium.By;\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.WebElement;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class GroupHelper extends HelperBase{\n\n    public GroupHelper(WebDriver driver) {\n        super(driver);\n    }\n\n    public void returnToGroupPage() {\n        click(By.linkText(\"group page\"));\n    }\n\n    public void submitGroupCreation() {\n        click(By.name(\"submit\"));\n    }\n\n    public void fillGroupForm(GroupData groupData) {\n        type(By.name(\"group_name\"), groupData.getName());\n        type(By.name(\"group_header\"), groupData.getHeader());\n        type(By.name(\"group_footer\"), groupData.getFooter());\n    }\n\n    public void initGroupCreation() {\n        click(By.name(\"new\"));\n    }\n\n    public void deleteSelectedGroups() {\n        click(By.name(\"delete\"));\n    }\n\n    public void selectGroup(int index) {\n        driver.findElements(By.name(\"selected[]\")).get(index).click();\n    }\n\n    public void initGroupModification() {\n        click(By.name(\"edit\"));\n    }\n\n    public void submitGroupModification() {\n        click(By.name(\"update\"));\n    }\n\n    public void create(GroupData group) {\n        initGroupCreation();\n        fillGroupForm(group);\n        submitGroupCreation();\n        returnToGroupPage();\n    }\n\n    public void modify(int index, GroupData group) {\n        selectGroup(index);\n        initGroupModification();\n        fillGroupForm(group);\n        submitGroupModification();\n        returnToGroupPage();\n    }\n\n    public void delete(int index) {\n        selectGroup(index);\n        deleteSelectedGroups();\n        returnToGroupPage();\n    }\n\n    public boolean isThereAGroup() {\n        return isElementPresent(By.name(\"selected[]\"));\n    }\n\n    public int getGroupCount() {\n        return driver.findElements(By.name(\"selected[]\")).size();\n    }\n\n    public List<GroupData> list() {\n        List<GroupData> groups = new ArrayList<GroupData>();\n        List<WebElement> elements = driver.findElements(By.cssSelector(\"span.group\"));\n        for (WebElement element : elements) {\n            String name = element.getText();\n            int id = Integer.parseInt(element.findElement(By.tagName(\"input\")).getAttribute(\"value\"));\n            GroupData group = new GroupData(name, null, null);\n            groups.add(group);\n        }\n        return groups;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- addressbook-web-tests/src/test/java/com/java_tr1/addressbook/appmanager/GroupHelper.java	(date 1525350318000)
++++ addressbook-web-tests/src/test/java/com/java_tr1/addressbook/appmanager/GroupHelper.java	(date 1525441226419)
+@@ -84,8 +84,7 @@
+         for (WebElement element : elements) {
+             String name = element.getText();
+             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+-            GroupData group = new GroupData(name, null, null);
+-            groups.add(group);
++            groups.add(new GroupData().withId(id).withName(name));
+         }
+         return groups;
+     }
+Index: addressbook-web-tests/src/test/java/com/java_tr1/addressbook/model/GroupData.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.java_tr1.addressbook.model;\n\npublic class GroupData {\n    private int id;\n    private final String name;\n    private final String header;\n    private final String footer;\n\n    public GroupData(int id, String name, String header, String footer) {\n        this.id = id;\n        this.name = name;\n        this.header = header;\n        this.footer = footer;\n    }\n\n    public GroupData(String name, String header, String footer) {\n        this.id = 0;\n        this.name = name;\n        this.header = header;\n        this.footer = footer;\n    }\n\n    @Override\n    public String toString() {\n        return \"GroupData{\" +\n                \"id='\" + id + '\\'' +\n                \", name='\" + name + '\\'' +\n                '}';\n    }\n\n    @Override\n    public boolean equals(Object o) {\n        if (this == o) return true;\n        if (o == null || getClass() != o.getClass()) return false;\n\n        GroupData groupData = (GroupData) o;\n\n        if (id != groupData.id) return false;\n        return name != null ? name.equals(groupData.name) : groupData.name == null;\n    }\n\n    @Override\n    public int hashCode() {\n        int result = id;\n        result = 31 * result + (name != null ? name.hashCode() : 0);\n        return result;\n    }\n\n    public int getId() { return id; }\n\n    public void setId(int id) {\n        this.id = id;\n    }\n\n    public String getName() {\n        return name;\n    }\n\n    public String getHeader() {\n        return header;\n    }\n\n    public String getFooter() {\n        return footer;\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- addressbook-web-tests/src/test/java/com/java_tr1/addressbook/model/GroupData.java	(date 1525350318000)
++++ addressbook-web-tests/src/test/java/com/java_tr1/addressbook/model/GroupData.java	(date 1525356887486)
+@@ -1,12 +1,32 @@
+ package com.java_tr1.addressbook.model;
+ 
+ public class GroupData {
+-    private int id;
+-    private final String name;
+-    private final String header;
+-    private final String footer;
++    private int id = Integer.MAX_VALUE;
++    private String name;
++    private String header;
++    private String footer;
++
++    public GroupData withName(String name) {
++        this.name = name;
++        return this;
++    }
+ 
+-    public GroupData(int id, String name, String header, String footer) {
++    public GroupData withHeader(String header) {
++        this.header = header;
++        return this;
++    }
++
++    public GroupData withFooter(String footer) {
++        this.footer = footer;
++        return this;
++    }
++
++    public GroupData withId(int id) {
++        this.id = id;
++        return this;
++    }
++
++    /*public GroupData(int id, String name, String header, String footer) {
+         this.id = id;
+         this.name = name;
+         this.header = header;
+@@ -18,7 +38,7 @@
+         this.name = name;
+         this.header = header;
+         this.footer = footer;
+-    }
++    }*/
+ 
+     @Override
+     public String toString() {
+@@ -48,9 +68,7 @@
+ 
+     public int getId() { return id; }
+ 
+-    public void setId(int id) {
+-        this.id = id;
+-    }
++
+ 
+     public String getName() {
+         return name;
+Index: addressbook-web-tests/src/test/java/com/java_tr1/addressbook/tests/GroupCreationTests.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.java_tr1.addressbook.tests;\n\nimport com.java_tr1.addressbook.model.GroupData;\nimport org.testng.Assert;\nimport org.testng.annotations.*;\n\nimport java.util.HashSet;\nimport java.util.List;\n\npublic class GroupCreationTests extends TestBase{\n\n\n    @Test\n    public void testGroupCreation() throws Exception {\n\n        app.goTo().GroupPage();\n        List<GroupData> before = app.group().list();\n        GroupData group = new GroupData(\"test5\", null, null);\n        app.group().create(group);\n        List<GroupData> after = app.group().list();\n        Assert.assertEquals(after.size(), before.size() +1);\n\n        int max = 0;\n\n        for(GroupData g : before){\n            if (g.getId() > max){\n                max = g.getId();\n            }\n        }\n\n        group.setId(max);\n        before.add(group);\n        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- addressbook-web-tests/src/test/java/com/java_tr1/addressbook/tests/GroupCreationTests.java	(date 1525350318000)
++++ addressbook-web-tests/src/test/java/com/java_tr1/addressbook/tests/GroupCreationTests.java	(date 1525440851699)
+@@ -15,7 +15,7 @@
+ 
+         app.goTo().GroupPage();
+         List<GroupData> before = app.group().list();
+-        GroupData group = new GroupData("test5", null, null);
++        GroupData group = new GroupData().withName("test5");
+         app.group().create(group);
+         List<GroupData> after = app.group().list();
+         Assert.assertEquals(after.size(), before.size() +1);
+@@ -28,7 +28,7 @@
+             }
+         }
+ 
+-        group.setId(max);
++        group.withId(max);
+         before.add(group);
+         Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+     }
+Index: addressbook-web-tests/src/test/java/com/java_tr1/addressbook/tests/GroupDeletionTests.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.java_tr1.addressbook.tests;\n\nimport com.java_tr1.addressbook.model.GroupData;\nimport org.testng.Assert;\nimport org.testng.annotations.BeforeMethod;\nimport org.testng.annotations.Test;\n\nimport java.util.List;\n\npublic class GroupDeletionTests extends TestBase{\n\n    @BeforeMethod\n    public void ensurePreconditions(){\n        app.goTo().GroupPage();\n        if (app.group().list().size() == 0){\n            app.group().create(new GroupData(\"test5\", null, null));\n        }\n    }\n\n    @Test\n    public void testGroupDeletion() throws Exception {\n        List<GroupData> before = app.group().list();\n        int index = before.size() - 1;\n        app.group().delete(index);\n        List<GroupData> after = app.group().list();\n        Assert.assertEquals(after.size(), index);\n\n        before.remove(index);\n        Assert.assertEquals(before , after);\n    }\n\n\n}\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- addressbook-web-tests/src/test/java/com/java_tr1/addressbook/tests/GroupDeletionTests.java	(date 1525350318000)
++++ addressbook-web-tests/src/test/java/com/java_tr1/addressbook/tests/GroupDeletionTests.java	(date 1525440921345)
+@@ -13,7 +13,7 @@
+     public void ensurePreconditions(){
+         app.goTo().GroupPage();
+         if (app.group().list().size() == 0){
+-            app.group().create(new GroupData("test5", null, null));
++            app.group().create(new GroupData().withName("test1"));
+         }
+     }
+ 
+Index: addressbook-web-tests/src/test/java/com/java_tr1/addressbook/tests/GroupModification.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.java_tr1.addressbook.tests;\n\nimport com.java_tr1.addressbook.model.GroupData;\nimport org.testng.Assert;\nimport org.testng.annotations.BeforeMethod;\nimport org.testng.annotations.Test;\n\nimport java.util.HashSet;\nimport java.util.List;\n\npublic class GroupModification extends TestBase {\n\n    @BeforeMethod\n    public void ensurePreconditions(){\n        app.goTo().GroupPage();\n        if (app.group().list().size() == 0){\n            app.group().create(new GroupData(\"test5\", null, null));\n        }\n    }\n\n    @Test\n    public void testGroupModification(){\n        List<GroupData> before = app.group().list();\n        int index = before.size() - 1;\n        GroupData group = new GroupData(before.get(index).getId(), \"test1\", \"test2\", \"test3\");\n        app.group().modify(index, group);\n        List<GroupData> after = app.group().list();\n        Assert.assertEquals(after.size(), before.size() );\n\n        before.remove(index);\n        before.add(group);\n        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));\n    }\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- addressbook-web-tests/src/test/java/com/java_tr1/addressbook/tests/GroupModification.java	(date 1525350318000)
++++ addressbook-web-tests/src/test/java/com/java_tr1/addressbook/tests/GroupModification.java	(date 1525441021476)
+@@ -14,7 +14,7 @@
+     public void ensurePreconditions(){
+         app.goTo().GroupPage();
+         if (app.group().list().size() == 0){
+-            app.group().create(new GroupData("test5", null, null));
++            app.group().create(new GroupData().withName("test5"));
+         }
+     }
+ 
+@@ -22,7 +22,7 @@
+     public void testGroupModification(){
+         List<GroupData> before = app.group().list();
+         int index = before.size() - 1;
+-        GroupData group = new GroupData(before.get(index).getId(), "test1", "test2", "test3");
++        GroupData group = new GroupData().withId(before.get(index).getId()).withName("test1").withFooter("test2").withHeader("test3");
+         app.group().modify(index, group);
+         List<GroupData> after = app.group().list();
+         Assert.assertEquals(after.size(), before.size() );
