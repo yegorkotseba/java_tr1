@@ -39,7 +39,7 @@ public class ApplicationManager {
             driver = new InternetExplorerDriver();
         }
         baseUrl = "http://localhost/addressbook/";
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         driver.get("http://localhost/addressbook/group.php");
         groupHelper = new GroupHelper(driver);
         navigationHelper = new NavigationHelper(driver);
